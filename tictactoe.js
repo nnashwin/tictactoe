@@ -21,10 +21,15 @@ var Model = {
   ]
   nextTurn: function() {
     Model.current_player = Model.players[Model.turn_no % 2];
-
-
-    };
-
-    Model.turn_no += 1;
+     Model.turn_no += 1; 
+    },
+  isWinner: function() {
+    // get the occupied fields of the current player
+    var fields = Model.current_player.fields;
+    for (var l = Model.winLines.length; l--) {
+      if(3 === Model.winLines[l].intersect(fields).length) {
+        throw (Model.current_player.name + " wins!");
+      }
+    }
   }
 };
