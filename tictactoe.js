@@ -33,3 +33,68 @@ var Model = {
     }
   }
 };
+
+var View = {
+  create: function() {
+    var cell, row, table = document.createElement('table');
+    // prereqs for CSS
+    table.cellSpacing = 0;
+    table.border = 1;
+    // create 9 table cells
+    for( var i = 0; i < 9; i++ ) {
+      // before each 3 cells, create a table row
+      if (0 === (i % 3)) {
+        row = table.insertRow (Math.floor(i/3))
+      }
+      // create table cell in current table row
+      cell = row.insertCell(i % 3);
+      // insert field number
+      cell.field = i + 1;
+    }
+    // return the table
+    return table;
+  }
+}, 
+  Controller = {
+    model: Model,
+    action: function(evt) {
+      var td = evt.target;
+      if (td.textContent.length || td.tagName.toLowerCase() !== "td") {
+        alert("Field is already occupied.");
+        return false
+      },
+      try {
+        var mdl = Controller.model;
+        mdl.current_player.symbol;
+        mdl.current_player.fields.push(+td.field);
+        // test if player wins the game
+        mdl.isWinner();
+        mdl.nextTurn();
+        // if there is a winner
+        
+          }
+          catch(msg) {
+          if (typeof msg == "string") {
+            alert(msg); // congratulations
+            Board.quit_game();
+            return null;
+        }
+        throw msg;
+      }
+    }
+  };
+// create table
+var table = View.create();
+// add click addEventListener
+table.addEventListener("click", controller_handler);
+ // attach table to document
+ table_parent.appendChild(table);
+
+ // Event object passed as first parameter
+ // to the handler function 
+ function controller_handler(evt) {
+  var cell = evt.target;
+  // controller code
+ }
+
+
